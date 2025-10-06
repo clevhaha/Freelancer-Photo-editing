@@ -7,34 +7,32 @@
 
     <style>
       body {
-        background: #0b1120;
+        background: #f6f7fb;
         font-family: "Inter", sans-serif;
-        color: #fff;
         display: flex;
         justify-content: center;
         align-items: center;
-        min-height: 100vh;
+        height: 100vh;
         margin: 0;
       }
 
-      /* Center content */
+      /* Container for logo and CMS form */
       .cms-container {
         display: flex;
         flex-direction: column;
         align-items: center;
-        justify-content: center;
         gap: 20px;
       }
 
-      /* ✅ Your custom logo */
+      /* ✅ Your logo style */
       .cms-logo {
         width: 90px;
         height: auto;
         border-radius: 10px;
-        margin-bottom: 12px; /* adds slight space above the email input */
+        margin-bottom: 12px; /* small space between logo and email */
       }
 
-      /* ✅ Remove Decap/Netlify CMS logos completely */
+      /* Remove Decap/Netlify CMS logos */
       .nc-loginLogo,
       .nc-loginLogo-image,
       .nc-loginPage-logo,
@@ -49,7 +47,7 @@
         width: 0 !important;
       }
 
-      /* ✅ Style the login button */
+      /* Style login button */
       button,
       .nc-loginButton {
         background-color: #ff6600 !important;
@@ -75,7 +73,7 @@
   </head>
 
   <body>
-    <!-- ✅ Your logo container -->
+    <!-- ✅ Custom logo container -->
     <div class="cms-container">
       <img src="/assets/uploads/logo.png" alt="Freelancer Photo Editing" class="cms-logo" />
     </div>
@@ -93,7 +91,7 @@
 
         CMS.init();
 
-        // 🔥 Remove Decap logos dynamically
+        // Remove Decap logos dynamically
         const removeLogos = () => {
           document.querySelectorAll(`
             .nc-loginLogo, .nc-loginLogo-image, .nc-loginPage-logo,
@@ -105,12 +103,14 @@
         const observer = new MutationObserver(removeLogos);
         observer.observe(document.body, { childList: true, subtree: true });
 
-        // ✅ Insert your logo directly above the Email field
+        // ✅ Insert your logo above the Email input field
         const insertLogoAboveEmail = () => {
           const emailInput = document.querySelector('input[type="email"]');
-          const logo = document.querySelector(".cms-container");
-          if (emailInput && logo && !emailInput.previousSibling?.classList?.contains("cms-container")) {
-            emailInput.parentElement.insertBefore(logo, emailInput);
+          const logoContainer = document.querySelector(".cms-container");
+
+          if (emailInput && logoContainer && !emailInput.previousSibling?.classList?.contains("cms-container")) {
+            const parent = emailInput.closest("form, div");
+            if (parent) parent.insertBefore(logoContainer, emailInput);
           }
         };
 
