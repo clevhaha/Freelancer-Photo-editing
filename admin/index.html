@@ -13,19 +13,20 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        justify-content: flex-start;
+        justify-content: center;
         min-height: 100vh;
         margin: 0;
-        padding-top: 80px;
       }
 
+      /* ✅ Custom logo placed just above login inputs */
       .cms-logo {
-        width: 140px;
-        margin-bottom: 40px;
+        width: 100px;
         border-radius: 12px;
+        margin-bottom: 20px;
+        display: block;
       }
 
-      /* Force-hide any Decap CMS logos */
+      /* ✅ Hide Decap CMS logos */
       .nc-loginLogo,
       .nc-loginLogo-image,
       .nc-loginPage-logo,
@@ -39,11 +40,26 @@
         height: 0 !important;
         width: 0 !important;
       }
+
+      /* Center login form */
+      .nc-loginPage,
+      .nc-loginContent {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+        margin-top: -50px !important;
+      }
+
+      /* Optional: round input corners for style */
+      input {
+        border-radius: 8px !important;
+      }
     </style>
   </head>
 
   <body>
-    <!-- ✅ Your logo -->
+    <!-- ✅ Your logo — will appear above the login form -->
     <img src="/assets/uploads/logo.png" alt="Freelancer Photo Editing Logo" class="cms-logo" />
 
     <!-- ✅ Load Decap CMS -->
@@ -59,7 +75,7 @@
 
         CMS.init();
 
-        // 🔥 Keep watching and removing Decap logos continuously
+        // 🔥 Keep removing Decap logos repeatedly
         const removeDecapLogos = () => {
           document.querySelectorAll(`
             .nc-loginLogo, .nc-loginLogo-image, .nc-loginPage-logo,
@@ -67,7 +83,6 @@
           `).forEach(el => el.remove());
         };
 
-        // Run once and then observe for new elements
         removeDecapLogos();
         const observer = new MutationObserver(removeDecapLogos);
         observer.observe(document.body, { childList: true, subtree: true });
