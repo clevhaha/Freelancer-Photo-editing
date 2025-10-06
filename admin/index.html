@@ -3,121 +3,63 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Freelancer Photo Editing CMS</title>
-
+    <title>CMS Login | Freelancer Photo Editing</title>
     <style>
       body {
-        background: #0b1120;
-        font-family: "Inter", sans-serif;
-        color: #fff;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        min-height: 100vh;
         margin: 0;
-      }
-
-      /* Center content */
-      .cms-container {
+        padding: 0;
+        background-color: #0b1120; /* same as site background */
         display: flex;
-        flex-direction: column;
-        align-items: center;
         justify-content: center;
-        gap: 20px;
+        align-items: center;
+        height: 100vh;
+        font-family: "Inter", sans-serif;
       }
-
-      /* ✅ Your custom logo */
-      .cms-logo {
-        width: 90px;
-        height: auto;
-        border-radius: 10px;
-        margin-bottom: 12px; /* adds slight space above the email input */
+      .login-wrapper {
+        text-align: center;
       }
-
-      /* ✅ Remove Decap/Netlify CMS logos completely */
-      .nc-loginLogo,
-      .nc-loginLogo-image,
-      .nc-loginPage-logo,
-      img[alt*="Decap"],
-      img[src*="decap"],
-      [data-testid*="logo"],
-      [class*="Logo"] {
-        display: none !important;
-        opacity: 0 !important;
-        visibility: hidden !important;
-        height: 0 !important;
-        width: 0 !important;
+      .login-wrapper img {
+        width: 100px;
+        border-radius: 12px;
+        margin-bottom: 20px; /* spacing above email field */
       }
-
-      /* ✅ Style the login button */
-      button,
-      .nc-loginButton {
-        background-color: #ff6600 !important;
-        border: none !important;
-        color: white !important;
-        font-weight: bold !important;
-        border-radius: 6px !important;
-        padding: 8px 20px !important;
-        transition: 0.3s !important;
+      .login-wrapper input {
+        display: block;
+        width: 300px;
+        margin: 10px auto;
+        padding: 10px;
+        border: none;
+        border-radius: 8px;
       }
-
-      button:hover,
-      .nc-loginButton:hover {
-        background-color: #ff8533 !important;
-        cursor: pointer !important;
+      .login-wrapper button {
+        background-color: #f97316; /* orange like your buttons */
+        color: white;
+        border: none;
+        border-radius: 8px;
+        padding: 10px 20px;
+        cursor: pointer;
+        font-weight: bold;
       }
-
-      input {
-        border-radius: 6px !important;
-        padding: 8px !important;
+      .login-wrapper button:hover {
+        background-color: #ea580c;
       }
     </style>
   </head>
-
   <body>
-    <!-- ✅ Your logo container -->
-    <div class="cms-container">
-      <img src="/assets/uploads/logo.png" alt="Freelancer Photo Editing" class="cms-logo" />
-    </div>
-
-    <!-- ✅ Load Decap CMS -->
-    <script src="https://cdn.jsdelivr.net/npm/decap-cms@3.0.9/dist/decap-cms.js"></script>
-
-    <script>
-      window.addEventListener("load", () => {
-        const CMS = window.DecapCMS || window.CMS;
-        if (!CMS) {
-          console.error("Decap CMS failed to load — check CDN link.");
-          return;
-        }
-
-        CMS.init();
-
-        // 🔥 Remove Decap logos dynamically
-        const removeLogos = () => {
-          document.querySelectorAll(`
-            .nc-loginLogo, .nc-loginLogo-image, .nc-loginPage-logo,
-            img[alt*="Decap"], img[src*="decap"], [data-testid*="logo"], [class*="Logo"]
-          `).forEach(el => el.remove());
-        };
-
-        removeLogos();
-        const observer = new MutationObserver(removeLogos);
-        observer.observe(document.body, { childList: true, subtree: true });
-
-        // ✅ Insert your logo directly above the Email field
-        const insertLogoAboveEmail = () => {
-          const emailInput = document.querySelector('input[type="email"]');
-          const logo = document.querySelector(".cms-container");
-          if (emailInput && logo && !emailInput.previousSibling?.classList?.contains("cms-container")) {
-            emailInput.parentElement.insertBefore(logo, emailInput);
+    <div class="login-wrapper">
+      <img src="/assets/uploads/your-logo.png" alt="Logo" />
+      <script src="https://cdn.jsdelivr.net/npm/decap-cms@3.0.9/dist/decap-cms.js"></script>
+      <script>
+        window.addEventListener("load", function () {
+          if (typeof window.DecapCMS !== "undefined") {
+            window.DecapCMS.init();
+          } else if (typeof window.CMS !== "undefined") {
+            window.CMS.init();
+          } else {
+            console.error("Netlify CMS script failed to load.");
           }
-        };
-
-        insertLogoAboveEmail();
-        const observer2 = new MutationObserver(insertLogoAboveEmail);
-        observer2.observe(document.body, { childList: true, subtree: true });
-      });
-    </script>
+        });
+      </script>
+    </div>
   </body>
 </html>
