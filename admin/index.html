@@ -13,10 +13,9 @@
         --accent-hover: #ff8533;
       }
 
-      /* Full dark background */
       html, body {
         background: radial-gradient(circle at top left, #0f1d33, #0b1623);
-        font-family: "Inter", sans-serif;
+        font-family: "Poppins", "Inter", sans-serif;
         height: 100vh;
         margin: 0;
         display: flex;
@@ -25,18 +24,24 @@
         color: #fff;
       }
 
-      /* Logo + login container */
       .login-layout {
         display: flex;
         align-items: center;
         gap: 60px;
         background: var(--card-bg);
-        padding: 50px 70px;
+        padding: 60px 80px;
         border-radius: 20px;
         box-shadow: 0 0 40px rgba(255, 102, 0, 0.15);
       }
 
-      /* Admin photo */
+      /* Left section with logo + title */
+      .brand-section {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+
       .cms-logo {
         width: 140px;
         height: 140px;
@@ -52,7 +57,16 @@
         box-shadow: 0 0 30px rgba(255, 102, 0, 0.5);
       }
 
-      /* Style the login form area (where Decap injects) */
+      .brand-title {
+        font-size: 1.6rem;
+        font-weight: 600;
+        color: var(--accent);
+        margin-top: 20px;
+        letter-spacing: 1px;
+        text-shadow: 0 0 15px rgba(255, 102, 0, 0.4);
+      }
+
+      /* Decap CMS container */
       #cms-root {
         display: flex;
         flex-direction: column;
@@ -98,7 +112,6 @@
         height: 0 !important;
       }
 
-      /* Responsive */
       @media (max-width: 700px) {
         .login-layout {
           flex-direction: column;
@@ -109,14 +122,22 @@
         #cms-root {
           width: 100%;
         }
+        .brand-title {
+          font-size: 1.3rem;
+        }
       }
     </style>
   </head>
 
   <body>
-    <!-- 🔹 Logo and CMS root (side by side) -->
     <div class="login-layout">
-      <img src="/assets/uploads/logo.png" alt="Freelancer Photo Editing" class="cms-logo" />
+      <!-- 🔸 Left section: logo + text -->
+      <div class="brand-section">
+        <img src="/assets/uploads/logo.png" alt="Freelancer Photo Editing" class="cms-logo" />
+        <div class="brand-title">Freelancer Photo Editing</div>
+      </div>
+
+      <!-- 🔹 Right section: Decap CMS login -->
       <div id="cms-root"></div>
     </div>
 
@@ -131,7 +152,7 @@
         }
         CMS.init();
 
-        // Hide Decap logo dynamically after CMS loads
+        // Hide Decap logos dynamically
         const removeLogos = () => {
           document.querySelectorAll(`
             .nc-loginLogo, .nc-loginLogo-image, .nc-loginPage-logo,
