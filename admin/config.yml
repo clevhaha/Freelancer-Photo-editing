@@ -2,8 +2,8 @@ backend:
   name: git-gateway
   branch: main
 
-media_folder: "assets/portfolio"
-public_folder: "assets/portfolio"
+media_folder: "assets/uploads"
+public_folder: "/assets/uploads"
 
 collections:
   - name: "site"
@@ -11,12 +11,13 @@ collections:
     files:
       - file: "Data.json"
         label: "Homepage Content"
+        name: "homepage"
         fields:
-          - { name: hero_heading, label: Hero Heading, widget: string }
-          - { name: hero_subheading, label: Hero Subheading, widget: string }
-          - name: portfolio
-            label: Portfolio
-            widget: list
+          - { label: "Hero Heading", name: "hero_heading", widget: "string" }
+          - { label: "Hero Subheading", name: "hero_subheading", widget: "string" }
+          - label: "Portfolio"
+            name: "portfolio"
+            widget: "list"
             fields:
-              - { name: title, label: Title, widget: string }
-              - { name: image, label: Image, widget: image }
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Image", name: "image", widget: "image" }
