@@ -3,21 +3,21 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>CMS | Freelancer Photo Editing</title>
+    <title>Content Manager | Freelancer Photo Editing</title>
   </head>
   <body>
-    <!-- Load Netlify CMS (Decap CMS) -->
-    <script src="https://unpkg.com/netlify-cms-app@^2.15.0/dist/netlify-cms.js"></script>
+    <!-- Load the Decap CMS (Netlify CMS) script -->
+    <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
 
     <script>
-      // Wait until the Netlify CMS script has loaded before initializing
+      // Wait until Decap CMS is available
       window.addEventListener("load", function () {
-        if (typeof window.NetlifyCmsApp !== "undefined") {
-          window.NetlifyCmsApp.init();
+        if (typeof window.DecapCMS !== "undefined") {
+          window.DecapCMS.init();
         } else if (typeof window.CMS !== "undefined") {
           window.CMS.init();
         } else {
-          console.error("Netlify CMS script failed to load.");
+          console.error("CMS script not found — please check CDN link.");
         }
       });
     </script>
