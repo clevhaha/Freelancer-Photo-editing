@@ -7,30 +7,34 @@
 
     <style>
       body {
-        background: #f6f7fb;
+        background: #0b1120;
         font-family: "Inter", sans-serif;
+        color: #fff;
         display: flex;
         justify-content: center;
         align-items: center;
-        height: 100vh;
+        min-height: 100vh;
         margin: 0;
       }
 
-      /* Container for logo + login form */
-      .login-layout {
+      /* Center content */
+      .cms-container {
         display: flex;
+        flex-direction: column;
         align-items: center;
-        gap: 40px; /* space between logo and form */
+        justify-content: center;
+        gap: 20px;
       }
 
-      /* ✅ Your logo styling */
+      /* ✅ Your custom logo */
       .cms-logo {
-        width: 120px;
+        width: 90px;
         height: auto;
         border-radius: 10px;
+        margin-bottom: 12px; /* adds slight space above the email input */
       }
 
-      /* Hide Decap CMS logo completely */
+      /* ✅ Remove Decap/Netlify CMS logos completely */
       .nc-loginLogo,
       .nc-loginLogo-image,
       .nc-loginPage-logo,
@@ -45,12 +49,7 @@
         width: 0 !important;
       }
 
-      /* Style login form */
-      input {
-        border-radius: 6px !important;
-        padding: 8px !important;
-      }
-
+      /* ✅ Style the login button */
       button,
       .nc-loginButton {
         background-color: #ff6600 !important;
@@ -67,18 +66,21 @@
         background-color: #ff8533 !important;
         cursor: pointer !important;
       }
+
+      input {
+        border-radius: 6px !important;
+        padding: 8px !important;
+      }
     </style>
   </head>
 
   <body>
-    <div class="login-layout">
-      <!-- ✅ Your logo -->
+    <!-- ✅ Your logo container -->
+    <div class="cms-container">
       <img src="/assets/uploads/logo.png" alt="Freelancer Photo Editing" class="cms-logo" />
-
-      <!-- ✅ Load Decap CMS -->
-      <div id="cms-root"></div>
     </div>
 
+    <!-- ✅ Load Decap CMS -->
     <script src="https://cdn.jsdelivr.net/npm/decap-cms@3.0.9/dist/decap-cms.js"></script>
 
     <script>
@@ -91,7 +93,7 @@
 
         CMS.init();
 
-        // Hide Decap logo dynamically
+        // 🔥 Remove Decap logos dynamically
         const removeLogos = () => {
           document.querySelectorAll(`
             .nc-loginLogo, .nc-loginLogo-image, .nc-loginPage-logo,
@@ -102,6 +104,19 @@
         removeLogos();
         const observer = new MutationObserver(removeLogos);
         observer.observe(document.body, { childList: true, subtree: true });
+
+        // ✅ Insert your logo directly above the Email field
+        const insertLogoAboveEmail = () => {
+          const emailInput = document.querySelector('input[type="email"]');
+          const logo = document.querySelector(".cms-container");
+          if (emailInput && logo && !emailInput.previousSibling?.classList?.contains("cms-container")) {
+            emailInput.parentElement.insertBefore(logo, emailInput);
+          }
+        };
+
+        insertLogoAboveEmail();
+        const observer2 = new MutationObserver(insertLogoAboveEmail);
+        observer2.observe(document.body, { childList: true, subtree: true });
       });
     </script>
   </body>
