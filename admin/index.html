@@ -1,144 +1,73 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Freelancer Photo Editing CMS</title>
+<style>
+  /* Force dark blue background everywhere */
+  html, body {
+    background: #0b1623 !important;
+    font-family: "Inter", sans-serif !important;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
 
-    <style>
-      /* === GLOBAL PAGE STYLE === */
-      body {
-        background: #0b1623; /* Full dark blue background like homepage */
-        font-family: "Inter", sans-serif;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        margin: 0;
-        color: #fff;
-      }
+  body {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+  }
 
-      /* === MAIN CONTAINER === */
-      .login-layout {
-        display: flex;
-        align-items: center;
-        gap: 60px;
-        background-color: #111b2a; /* Slightly lighter navy for contrast */
-        padding: 50px 70px;
-        border-radius: 20px;
-        box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4);
-      }
+  /* Prevent CMS from overriding background */
+  #cms-root, .nc-app, .nc-root, .nc-loginPage {
+    background: transparent !important;
+  }
 
-      /* === LOGO STYLING === */
-      .cms-logo {
-        width: 140px;
-        height: 140px;
-        border-radius: 12px;
-        object-fit: cover;
-        border: 3px solid #ff6600; /* Orange accent border */
-      }
+  /* Align logo + form horizontally */
+  .login-layout {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+  }
 
-      /* === HIDE DECAP CMS DEFAULT LOGO === */
-      .nc-loginLogo,
-      .nc-loginLogo-image,
-      .nc-loginPage-logo,
-      img[alt*="Decap"],
-      img[src*="decap"],
-      [data-testid*="logo"],
-      [class*="Logo"] {
-        display: none !important;
-        opacity: 0 !important;
-        visibility: hidden !important;
-        height: 0 !important;
-        width: 0 !important;
-      }
+  .cms-logo {
+    width: 120px;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+    border: 3px solid #ff6600;
+    padding: 5px;
+    background-color: #0b1623;
+  }
 
-      /* === LOGIN FORM === */
-      input {
-        border-radius: 8px !important;
-        padding: 12px 16px !important;
-        background: #ffffff !important;
-        color: #000 !important;
-        border: none !important;
-        width: 280px !important;
-        font-size: 14px !important;
-        margin-bottom: 12px !important;
-      }
+  /* Hide Decap CMS logo */
+  .nc-loginLogo,
+  .nc-loginLogo-image,
+  .nc-loginPage-logo,
+  img[alt*="Decap"],
+  img[src*="decap"],
+  [data-testid*="logo"],
+  [class*="Logo"] {
+    display: none !important;
+  }
 
-      input:focus {
-        outline: 2px solid #ff6600 !important;
-      }
+  /* Inputs */
+  input {
+    border-radius: 6px !important;
+    padding: 10px !important;
+  }
 
-      button,
-      .nc-loginButton {
-        background-color: #ff6600 !important;
-        border: none !important;
-        color: #fff !important;
-        font-weight: bold !important;
-        border-radius: 8px !important;
-        padding: 10px 20px !important;
-        transition: 0.3s !important;
-        box-shadow: 0 3px 8px rgba(255, 102, 0, 0.3) !important;
-      }
+  /* Buttons */
+  button,
+  .nc-loginButton {
+    background-color: #ff6600 !important;
+    border: none !important;
+    color: white !important;
+    font-weight: bold !important;
+    border-radius: 6px !important;
+    padding: 10px 20px !important;
+    transition: 0.3s !important;
+  }
 
-      button:hover,
-      .nc-loginButton:hover {
-        background-color: #e55b00 !important;
-        cursor: pointer !important;
-        box-shadow: 0 4px 12px rgba(255, 102, 0, 0.5) !important;
-      }
-
-      /* === RESPONSIVE (MOBILE) === */
-      @media (max-width: 768px) {
-        .login-layout {
-          flex-direction: column;
-          padding: 40px;
-          text-align: center;
-          background-color: transparent; /* Use full-page dark blue */
-          box-shadow: none;
-        }
-
-        .cms-logo {
-          margin-bottom: 25px;
-        }
-      }
-    </style>
-  </head>
-
-  <body>
-    <div class="login-layout">
-      <!-- ✅ Custom Logo -->
-      <img src="/assets/uploads/logo.png" alt="Freelancer Photo Editing" class="cms-logo" />
-
-      <!-- ✅ Decap CMS Login Form -->
-      <div id="cms-root"></div>
-    </div>
-
-    <!-- ✅ Load Decap CMS -->
-    <script src="https://cdn.jsdelivr.net/npm/decap-cms@3.0.9/dist/decap-cms.js"></script>
-
-    <script>
-      window.addEventListener("load", () => {
-        const CMS = window.DecapCMS || window.CMS;
-        if (!CMS) {
-          console.error("Decap CMS failed to load — check CDN link.");
-          return;
-        }
-
-        CMS.init();
-
-        // Remove Decap logos dynamically if they reappear
-        const removeLogos = () => {
-          document.querySelectorAll(`
-            .nc-loginLogo, .nc-loginLogo-image, .nc-loginPage-logo,
-            img[alt*="Decap"], img[src*="decap"], [data-testid*="logo"], [class*="Logo"]
-          `).forEach(el => el.remove());
-        };
-
-        removeLogos();
-        const observer = new MutationObserver(removeLogos);
-        observer.observe(document.body, { childList: true, subtree: true });
-      });
-    </script>
-  </body>
-</html>
+  button:hover,
+  .nc-loginButton:hover {
+    background-color: #ff8533 !important;
+    cursor: pointer !important;
+  }
+</style>
