@@ -4,6 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Freelancer Photo Editing CMS</title>
+
     <style>
       body {
         background: #0b1120;
@@ -14,6 +15,7 @@
         align-items: center;
         height: 100vh;
         flex-direction: column;
+        margin: 0;
       }
 
       .cms-logo {
@@ -22,39 +24,47 @@
         border-radius: 12px;
       }
 
-      /* Hide the default Decap logo */
-      .decap-cms-logo,
-      .nc-githubButton-icon,
-      .nc-login-logo {
+      /* Hide Decap CMS default branding */
+      .nc-loginLogo,
+      .nc-loginLogo-image,
+      .nc-loginPage-logo,
+      .nc-loginPage-logo img,
+      .nc-githubButton-icon {
         display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
       }
     </style>
   </head>
+
   <body>
-    <!-- ✅ Your custom logo -->
+    <!-- ✅ Your logo -->
     <img src="/assets/uploads/logo.png" alt="Freelancer Photo Editing Logo" class="cms-logo" />
 
     <!-- ✅ Load Decap CMS -->
     <script src="https://cdn.jsdelivr.net/npm/decap-cms@3.0.9/dist/decap-cms.js"></script>
 
     <script>
-      // Initialize CMS
       window.addEventListener("load", function () {
-        const initCMS = () => {
-          const cms = window.DecapCMS || window.CMS;
-          if (cms) {
-            cms.init();
+        const cms = window.DecapCMS || window.CMS;
+        if (!cms) {
+          console.error("Decap CMS failed to load — check CDN link.");
+          return;
+        }
 
-            // Hide Decap branding after render
-            const observer = new MutationObserver(() => {
-              document.querySelectorAll(".nc-loginLogo, .nc-loginLogo-image, .nc-loginPage-logo").forEach(el => el.remove());
-            });
-            observer.observe(document.body, { childList: true, subtree: true });
-          } else {
-            console.error("Decap CMS failed to load — check CDN link.");
-          }
+        cms.init();
+
+        // Continuously remove Decap branding after it loads
+        const removeDecapLogo = () => {
+          const logos = document.querySelectorAll(
+            ".nc-loginLogo, .nc-loginLogo-image, .nc-loginPage-logo, [src*='decap'], [alt*='Decap']"
+          );
+          logos.forEach(el => el.remove());
         };
-        initCMS();
+
+        const observer = new MutationObserver(removeDecapLogo);
+        observer.observe(document.body, { childList: true, subtree: true });
+        removeDecapLogo(); // run immediately
       });
     </script>
   </body>
