@@ -1,73 +1,178 @@
-<style>
-  /* Force dark blue background everywhere */
-  html, body {
-    background: #0b1623 !important;
-    font-family: "Inter", sans-serif !important;
-    height: 100%;
-    margin: 0;
-    padding: 0;
-  }
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Freelancer Photo Editing CMS</title>
 
-  body {
-    display: flex !important;
-    justify-content: center !important;
-    align-items: center !important;
-  }
+    <style>
+      :root {
+        --dark-bg: #0b1623;
+        --card-bg: #111b2a;
+        --accent: #ff6600;
+        --accent-hover: #ff8533;
+      }
 
-  /* Prevent CMS from overriding background */
-  #cms-root, .nc-app, .nc-root, .nc-loginPage {
-    background: transparent !important;
-  }
+      /* 🔹 Full page background */
+      html, body {
+        background: radial-gradient(circle at top left, #0f1d33, #0b1623);
+        font-family: "Inter", sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        overflow: hidden;
+        color: #fff;
+      }
 
-  /* Align logo + form horizontally */
-  .login-layout {
-    display: flex;
-    align-items: center;
-    gap: 40px;
-  }
+      /* 🔹 Floating container for photo + form */
+      .login-layout {
+        display: flex;
+        align-items: center;
+        gap: 60px;
+        background: var(--card-bg);
+        padding: 50px 70px;
+        border-radius: 20px;
+        box-shadow: 0 0 40px rgba(255, 102, 0, 0.15);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
 
-  .cms-logo {
-    width: 120px;
-    height: auto;
-    border-radius: 10px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
-    border: 3px solid #ff6600;
-    padding: 5px;
-    background-color: #0b1623;
-  }
+      .login-layout:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 0 60px rgba(255, 102, 0, 0.25);
+      }
 
-  /* Hide Decap CMS logo */
-  .nc-loginLogo,
-  .nc-loginLogo-image,
-  .nc-loginPage-logo,
-  img[alt*="Decap"],
-  img[src*="decap"],
-  [data-testid*="logo"],
-  [class*="Logo"] {
-    display: none !important;
-  }
+      /* 🔹 Admin photo */
+      .cms-logo {
+        width: 140px;
+        height: 140px;
+        border-radius: 50%;
+        border: 3px solid var(--accent);
+        object-fit: cover;
+        box-shadow: 0 0 20px rgba(255, 102, 0, 0.3);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
 
-  /* Inputs */
-  input {
-    border-radius: 6px !important;
-    padding: 10px !important;
-  }
+      .cms-logo:hover {
+        transform: scale(1.05);
+        box-shadow: 0 0 30px rgba(255, 102, 0, 0.5);
+      }
 
-  /* Buttons */
-  button,
-  .nc-loginButton {
-    background-color: #ff6600 !important;
-    border: none !important;
-    color: white !important;
-    font-weight: bold !important;
-    border-radius: 6px !important;
-    padding: 10px 20px !important;
-    transition: 0.3s !important;
-  }
+      /* 🔹 Login form */
+      .login-form {
+        display: flex;
+        flex-direction: column;
+        width: 280px;
+      }
 
-  button:hover,
-  .nc-loginButton:hover {
-    background-color: #ff8533 !important;
-    cursor: pointer !important;
-  }
-</style>
+      .login-form h2 {
+        color: #fff;
+        font-size: 1.6rem;
+        margin-bottom: 25px;
+        text-align: center;
+        letter-spacing: 1px;
+      }
+
+      .login-form input {
+        background: #fff;
+        border: none;
+        border-radius: 8px;
+        padding: 12px;
+        margin-bottom: 15px;
+        font-size: 14px;
+        color: #000;
+      }
+
+      .login-form input:focus {
+        outline: 2px solid var(--accent);
+        box-shadow: 0 0 10px rgba(255, 102, 0, 0.4);
+      }
+
+      .login-form button,
+      .nc-loginButton {
+        background-color: var(--accent) !important;
+        border: none !important;
+        color: white !important;
+        font-weight: bold !important;
+        border-radius: 8px !important;
+        padding: 12px 20px !important;
+        font-size: 14px !important;
+        cursor: pointer !important;
+        transition: all 0.3s ease !important;
+        box-shadow: 0 0 15px rgba(255, 102, 0, 0.2);
+      }
+
+      .login-form button:hover,
+      .nc-loginButton:hover {
+        background-color: var(--accent-hover) !important;
+        box-shadow: 0 0 25px rgba(255, 102, 0, 0.4);
+        transform: translateY(-2px);
+      }
+
+      /* 🔹 Hide Decap CMS branding */
+      .nc-loginLogo,
+      .nc-loginLogo-image,
+      .nc-loginPage-logo,
+      img[alt*="Decap"],
+      img[src*="decap"],
+      [data-testid*="logo"],
+      [class*="Logo"] {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        width: 0 !important;
+        height: 0 !important;
+      }
+
+      /* 🔹 Responsive */
+      @media (max-width: 700px) {
+        .login-layout {
+          flex-direction: column;
+          gap: 30px;
+          padding: 40px;
+          width: 90%;
+        }
+
+        .login-form {
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="login-layout">
+      <!-- ✅ Your admin photo -->
+      <img src="/assets/uploads/logo.png" alt="Freelancer Photo Editing" class="cms-logo" />
+
+      <!-- ✅ Decap CMS login mount -->
+      <div id="cms-root" class="login-form"></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/decap-cms@3.0.9/dist/decap-cms.js"></script>
+
+    <script>
+      window.addEventListener("load", () => {
+        const CMS = window.DecapCMS || window.CMS;
+        if (!CMS) {
+          console.error("Decap CMS failed to load — check CDN link.");
+          return;
+        }
+
+        CMS.init();
+
+        const removeLogos = () => {
+          document.querySelectorAll(`
+            .nc-loginLogo, .nc-loginLogo-image, .nc-loginPage-logo,
+            img[alt*="Decap"], img[src*="decap"], [data-testid*="logo"], [class*="Logo"]
+          `).forEach(el => el.remove());
+        };
+
+        removeLogos();
+        const observer = new MutationObserver(removeLogos);
+        observer.observe(document.body, { childList: true, subtree: true });
+      });
+    </script>
+  </body>
+</html>
