@@ -1,0 +1,9 @@
+{
+  "hero_heading": "Professional photo editing & retouching — fast turnaround",
+  "hero_subheading": "Wedding photos, product images, portrait retouching, background removal, color grading, and more.",
+  "portfolio": [
+    { "title": "Portfolio 1", "image": "assets/portfolio/1.jpg" },
+    { "title": "Portfolio 2", "image": "assets/portfolio/2.jpg" },
+    { "title": "Portfolio 3", "image": "assets/portfolio/3.jpg" }
+  ]
+}
