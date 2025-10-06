@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Freelancer Photo Editing CMS</title>
     <style>
-      /* Custom styles for your CMS login page */
       body {
         background: #0b1120;
         color: #fff;
@@ -18,8 +17,16 @@
       }
 
       .cms-logo {
-        width: 120px;
-        margin-bottom: 20px;
+        width: 140px;
+        margin-bottom: 30px;
+        border-radius: 12px;
+      }
+
+      /* Hide the default Decap logo */
+      .decap-cms-logo,
+      .nc-githubButton-icon,
+      .nc-login-logo {
+        display: none !important;
       }
     </style>
   </head>
@@ -27,18 +34,27 @@
     <!-- ✅ Your custom logo -->
     <img src="/assets/uploads/logo.png" alt="Freelancer Photo Editing Logo" class="cms-logo" />
 
-    <!-- ✅ Load Decap CMS (Netlify CMS fork) -->
+    <!-- ✅ Load Decap CMS -->
     <script src="https://cdn.jsdelivr.net/npm/decap-cms@3.0.9/dist/decap-cms.js"></script>
 
     <script>
+      // Initialize CMS
       window.addEventListener("load", function () {
-        if (typeof window.DecapCMS !== "undefined") {
-          window.DecapCMS.init();
-        } else if (typeof window.CMS !== "undefined") {
-          window.CMS.init();
-        } else {
-          console.error("Decap CMS failed to load — check CDN link.");
-        }
+        const initCMS = () => {
+          const cms = window.DecapCMS || window.CMS;
+          if (cms) {
+            cms.init();
+
+            // Hide Decap branding after render
+            const observer = new MutationObserver(() => {
+              document.querySelectorAll(".nc-loginLogo, .nc-loginLogo-image, .nc-loginPage-logo").forEach(el => el.remove());
+            });
+            observer.observe(document.body, { childList: true, subtree: true });
+          } else {
+            console.error("Decap CMS failed to load — check CDN link.");
+          }
+        };
+        initCMS();
       });
     </script>
   </body>
