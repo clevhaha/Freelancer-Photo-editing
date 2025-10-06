@@ -13,20 +13,19 @@
         --accent-hover: #ff8533;
       }
 
-      /* 🔹 Full page background */
+      /* Full dark background */
       html, body {
         background: radial-gradient(circle at top left, #0f1d33, #0b1623);
         font-family: "Inter", sans-serif;
+        height: 100vh;
+        margin: 0;
         display: flex;
         justify-content: center;
         align-items: center;
-        height: 100vh;
-        margin: 0;
-        overflow: hidden;
         color: #fff;
       }
 
-      /* 🔹 Floating container for photo + form */
+      /* Logo + login container */
       .login-layout {
         display: flex;
         align-items: center;
@@ -35,15 +34,9 @@
         padding: 50px 70px;
         border-radius: 20px;
         box-shadow: 0 0 40px rgba(255, 102, 0, 0.15);
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
       }
 
-      .login-layout:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 0 60px rgba(255, 102, 0, 0.25);
-      }
-
-      /* 🔹 Admin photo */
+      /* Admin photo */
       .cms-logo {
         width: 140px;
         height: 140px;
@@ -59,58 +52,38 @@
         box-shadow: 0 0 30px rgba(255, 102, 0, 0.5);
       }
 
-      /* 🔹 Login form */
-      .login-form {
+      /* Style the login form area (where Decap injects) */
+      #cms-root {
         display: flex;
         flex-direction: column;
         width: 280px;
       }
 
-      .login-form h2 {
-        color: #fff;
-        font-size: 1.6rem;
-        margin-bottom: 25px;
-        text-align: center;
-        letter-spacing: 1px;
+      input {
+        border-radius: 8px !important;
+        padding: 12px !important;
       }
 
-      .login-form input {
-        background: #fff;
-        border: none;
-        border-radius: 8px;
-        padding: 12px;
-        margin-bottom: 15px;
-        font-size: 14px;
-        color: #000;
-      }
-
-      .login-form input:focus {
-        outline: 2px solid var(--accent);
-        box-shadow: 0 0 10px rgba(255, 102, 0, 0.4);
-      }
-
-      .login-form button,
+      button,
       .nc-loginButton {
         background-color: var(--accent) !important;
         border: none !important;
-        color: white !important;
+        color: #fff !important;
         font-weight: bold !important;
         border-radius: 8px !important;
         padding: 12px 20px !important;
-        font-size: 14px !important;
         cursor: pointer !important;
-        transition: all 0.3s ease !important;
-        box-shadow: 0 0 15px rgba(255, 102, 0, 0.2);
+        transition: 0.3s !important;
       }
 
-      .login-form button:hover,
+      button:hover,
       .nc-loginButton:hover {
         background-color: var(--accent-hover) !important;
-        box-shadow: 0 0 25px rgba(255, 102, 0, 0.4);
         transform: translateY(-2px);
+        box-shadow: 0 0 20px rgba(255, 102, 0, 0.3);
       }
 
-      /* 🔹 Hide Decap CMS branding */
+      /* Hide Decap CMS logos */
       .nc-loginLogo,
       .nc-loginLogo-image,
       .nc-loginPage-logo,
@@ -119,22 +92,21 @@
       [data-testid*="logo"],
       [class*="Logo"] {
         display: none !important;
-        visibility: hidden !important;
         opacity: 0 !important;
+        visibility: hidden !important;
         width: 0 !important;
         height: 0 !important;
       }
 
-      /* 🔹 Responsive */
+      /* Responsive */
       @media (max-width: 700px) {
         .login-layout {
           flex-direction: column;
+          text-align: center;
           gap: 30px;
           padding: 40px;
-          width: 90%;
         }
-
-        .login-form {
+        #cms-root {
           width: 100%;
         }
       }
@@ -142,16 +114,14 @@
   </head>
 
   <body>
+    <!-- 🔹 Logo and CMS root (side by side) -->
     <div class="login-layout">
-      <!-- ✅ Your admin photo -->
       <img src="/assets/uploads/logo.png" alt="Freelancer Photo Editing" class="cms-logo" />
-
-      <!-- ✅ Decap CMS login mount -->
-      <div id="cms-root" class="login-form"></div>
+      <div id="cms-root"></div>
     </div>
 
+    <!-- Decap CMS -->
     <script src="https://cdn.jsdelivr.net/npm/decap-cms@3.0.9/dist/decap-cms.js"></script>
-
     <script>
       window.addEventListener("load", () => {
         const CMS = window.DecapCMS || window.CMS;
@@ -159,9 +129,9 @@
           console.error("Decap CMS failed to load — check CDN link.");
           return;
         }
-
         CMS.init();
 
+        // Hide Decap logo dynamically after CMS loads
         const removeLogos = () => {
           document.querySelectorAll(`
             .nc-loginLogo, .nc-loginLogo-image, .nc-loginPage-logo,
