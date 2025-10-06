@@ -16,23 +16,21 @@
         margin: 0;
       }
 
-      /* Container for logo and CMS form */
-      .cms-container {
+      /* Container for logo + login form */
+      .login-layout {
         display: flex;
-        flex-direction: column;
         align-items: center;
-        gap: 20px;
+        gap: 40px; /* space between logo and form */
       }
 
-      /* ✅ Your logo style */
+      /* ✅ Your logo styling */
       .cms-logo {
-        width: 90px;
+        width: 120px;
         height: auto;
         border-radius: 10px;
-        margin-bottom: 12px; /* small space between logo and email */
       }
 
-      /* Remove Decap/Netlify CMS logos */
+      /* Hide Decap CMS logo completely */
       .nc-loginLogo,
       .nc-loginLogo-image,
       .nc-loginPage-logo,
@@ -47,7 +45,12 @@
         width: 0 !important;
       }
 
-      /* Style login button */
+      /* Style login form */
+      input {
+        border-radius: 6px !important;
+        padding: 8px !important;
+      }
+
       button,
       .nc-loginButton {
         background-color: #ff6600 !important;
@@ -64,21 +67,18 @@
         background-color: #ff8533 !important;
         cursor: pointer !important;
       }
-
-      input {
-        border-radius: 6px !important;
-        padding: 8px !important;
-      }
     </style>
   </head>
 
   <body>
-    <!-- ✅ Custom logo container -->
-    <div class="cms-container">
+    <div class="login-layout">
+      <!-- ✅ Your logo -->
       <img src="/assets/uploads/logo.png" alt="Freelancer Photo Editing" class="cms-logo" />
+
+      <!-- ✅ Load Decap CMS -->
+      <div id="cms-root"></div>
     </div>
 
-    <!-- ✅ Load Decap CMS -->
     <script src="https://cdn.jsdelivr.net/npm/decap-cms@3.0.9/dist/decap-cms.js"></script>
 
     <script>
@@ -91,7 +91,7 @@
 
         CMS.init();
 
-        // Remove Decap logos dynamically
+        // Hide Decap logo dynamically
         const removeLogos = () => {
           document.querySelectorAll(`
             .nc-loginLogo, .nc-loginLogo-image, .nc-loginPage-logo,
@@ -102,21 +102,6 @@
         removeLogos();
         const observer = new MutationObserver(removeLogos);
         observer.observe(document.body, { childList: true, subtree: true });
-
-        // ✅ Insert your logo above the Email input field
-        const insertLogoAboveEmail = () => {
-          const emailInput = document.querySelector('input[type="email"]');
-          const logoContainer = document.querySelector(".cms-container");
-
-          if (emailInput && logoContainer && !emailInput.previousSibling?.classList?.contains("cms-container")) {
-            const parent = emailInput.closest("form, div");
-            if (parent) parent.insertBefore(logoContainer, emailInput);
-          }
-        };
-
-        insertLogoAboveEmail();
-        const observer2 = new MutationObserver(insertLogoAboveEmail);
-        observer2.observe(document.body, { childList: true, subtree: true });
       });
     </script>
   </body>
