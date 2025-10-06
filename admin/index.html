@@ -1,169 +1,125 @@
-<!doctype html>
+```html
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Freelancer Photo Editing CMS</title>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Freelancer Photo Editing - Admin Login</title>
+  <style>
+    :root {
+      --accent: #ff6600;
+      --accent-hover: #ff8533;
+      --dark-blue: #0b1622;
+      --darker-blue: #081019;
+    }
 
-    <style>
-      :root {
-        --dark-bg: #0b1623;
-        --card-bg: #111b2a;
-        --accent: #ff6600;
-        --accent-hover: #ff8533;
-      }
+    body {
+      margin: 0;
+      font-family: "Poppins", sans-serif;
+      background: linear-gradient(135deg, var(--dark-blue), var(--darker-blue));
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #fff;
+    }
 
-      html, body {
-        background: radial-gradient(circle at top left, #0f1d33, #0b1623);
-        font-family: "Poppins", "Inter", sans-serif;
-        height: 100vh;
-        margin: 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        color: #fff;
-      }
+    .login-container {
+      display: flex;
+      align-items: center;
+      background-color: rgba(10, 20, 30, 0.9);
+      padding: 40px 60px;
+      border-radius: 20px;
+      box-shadow: 0 0 40px rgba(255, 102, 0, 0.2);
+    }
 
-      .login-layout {
-        display: flex;
-        align-items: center;
-        gap: 60px;
-        background: var(--card-bg);
-        padding: 60px 80px;
-        border-radius: 20px;
-        box-shadow: 0 0 40px rgba(255, 102, 0, 0.15);
-      }
+    .logo-section {
+      text-align: center;
+      margin-right: 60px;
+    }
 
-      /* Left section with logo + title */
-      .brand-section {
-        display: flex;
+    .logo-section img {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      border: 3px solid var(--accent);
+      box-shadow: 0 0 15px rgba(255, 102, 0, 0.4);
+      object-fit: cover;
+    }
+
+    .logo-section h2 {
+      color: var(--accent);
+      margin-top: 15px;
+      font-size: 20px;
+      text-shadow: 0 0 10px rgba(255, 102, 0, 0.3);
+    }
+
+    .form-section {
+      display: flex;
+      flex-direction: column;
+      width: 260px;
+    }
+
+    input[type="email"],
+    input[type="password"] {
+      padding: 10px 12px;
+      margin-bottom: 15px;
+      border: none;
+      border-radius: 6px;
+      font-size: 14px;
+      font-family: inherit;
+      outline: none;
+    }
+
+    button {
+      background-color: var(--accent);
+      border: none;
+      color: #fff;
+      font-weight: 600;
+      font-size: 14px;
+      font-family: "Poppins", sans-serif;
+      border-radius: 8px;
+      padding: 10px 24px;
+      cursor: pointer;
+      transition: 0.3s;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+      box-shadow: 0 4px 12px rgba(255, 102, 0, 0.3);
+    }
+
+    button:hover {
+      background-color: var(--accent-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 0 20px rgba(255, 102, 0, 0.4);
+    }
+
+    @media (max-width: 768px) {
+      .login-container {
         flex-direction: column;
-        align-items: center;
         text-align: center;
+        padding: 30px;
       }
-
-      .cms-logo {
-        width: 140px;
-        height: 140px;
-        border-radius: 50%;
-        border: 3px solid var(--accent);
-        object-fit: cover;
-        box-shadow: 0 0 20px rgba(255, 102, 0, 0.3);
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      .logo-section {
+        margin-right: 0;
+        margin-bottom: 20px;
       }
-
-      .cms-logo:hover {
-        transform: scale(1.05);
-        box-shadow: 0 0 30px rgba(255, 102, 0, 0.5);
-      }
-
-      .brand-title {
-        font-size: 1.6rem;
-        font-weight: 600;
-        color: var(--accent);
-        margin-top: 20px;
-        letter-spacing: 1px;
-        text-shadow: 0 0 15px rgba(255, 102, 0, 0.4);
-      }
-
-      /* Decap CMS container */
-      #cms-root {
-        display: flex;
-        flex-direction: column;
-        width: 280px;
-      }
-
-      input {
-        border-radius: 8px !important;
-        padding: 12px !important;
-      }
-
-      button,
-      .nc-loginButton {
-        background-color: var(--accent) !important;
-        border: none !important;
-        color: #fff !important;
-        font-weight: bold !important;
-        border-radius: 8px !important;
-        padding: 12px 20px !important;
-        cursor: pointer !important;
-        transition: 0.3s !important;
-      }
-
-      button:hover,
-      .nc-loginButton:hover {
-        background-color: var(--accent-hover) !important;
-        transform: translateY(-2px);
-        box-shadow: 0 0 20px rgba(255, 102, 0, 0.3);
-      }
-
-      /* Hide Decap CMS logos */
-      .nc-loginLogo,
-      .nc-loginLogo-image,
-      .nc-loginPage-logo,
-      img[alt*="Decap"],
-      img[src*="decap"],
-      [data-testid*="logo"],
-      [class*="Logo"] {
-        display: none !important;
-        opacity: 0 !important;
-        visibility: hidden !important;
-        width: 0 !important;
-        height: 0 !important;
-      }
-
-      @media (max-width: 700px) {
-        .login-layout {
-          flex-direction: column;
-          text-align: center;
-          gap: 30px;
-          padding: 40px;
-        }
-        #cms-root {
-          width: 100%;
-        }
-        .brand-title {
-          font-size: 1.3rem;
-        }
-      }
-    </style>
-  </head>
-
-  <body>
-    <div class="login-layout">
-      <!-- 🔸 Left section: logo + text -->
-      <div class="brand-section">
-        <img src="/assets/uploads/logo.png" alt="Freelancer Photo Editing" class="cms-logo" />
-        <div class="brand-title">Freelancer Photo Editing</div>
-      </div>
-
-      <!-- 🔹 Right section: Decap CMS login -->
-      <div id="cms-root"></div>
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <div class="logo-section">
+      <img src="your-photo.jpg" alt="Freelancer Photo Editing Logo" />
+      <h2>Freelancer Photo Editing</h2>
     </div>
-
-    <!-- Decap CMS -->
-    <script src="https://cdn.jsdelivr.net/npm/decap-cms@3.0.9/dist/decap-cms.js"></script>
-    <script>
-      window.addEventListener("load", () => {
-        const CMS = window.DecapCMS || window.CMS;
-        if (!CMS) {
-          console.error("Decap CMS failed to load — check CDN link.");
-          return;
-        }
-        CMS.init();
-
-        // Hide Decap logos dynamically
-        const removeLogos = () => {
-          document.querySelectorAll(`
-            .nc-loginLogo, .nc-loginLogo-image, .nc-loginPage-logo,
-            img[alt*="Decap"], img[src*="decap"], [data-testid*="logo"], [class*="Logo"]
-          `).forEach(el => el.remove());
-        };
-
-        removeLogos();
-        const observer = new MutationObserver(removeLogos);
-        observer.observe(document.body, { childList: true, subtree: true });
-      });
-    </script>
-  </body>
+    <div class="form-section">
+      <input type="email" placeholder="Email" required />
+      <input type="password" placeholder="Password" required />
+      <button type="submit">Login</button>
+    </div>
+  </div>
+</body>
 </html>
+```
