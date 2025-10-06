@@ -11,28 +11,33 @@
         color: #fff;
         font-family: "Inter", sans-serif;
         display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
         flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        min-height: 100vh;
         margin: 0;
+        padding-top: 80px;
       }
 
       .cms-logo {
         width: 140px;
-        margin-bottom: 30px;
+        margin-bottom: 40px;
         border-radius: 12px;
       }
 
-      /* Hide Decap CMS default branding */
+      /* Force-hide any Decap CMS logos */
       .nc-loginLogo,
       .nc-loginLogo-image,
       .nc-loginPage-logo,
-      .nc-loginPage-logo img,
-      .nc-githubButton-icon {
+      img[alt*="Decap"],
+      img[src*="decap"],
+      [data-testid*="logo"],
+      [class*="Logo"] {
         display: none !important;
-        visibility: hidden !important;
         opacity: 0 !important;
+        visibility: hidden !important;
+        height: 0 !important;
+        width: 0 !important;
       }
     </style>
   </head>
@@ -45,26 +50,27 @@
     <script src="https://cdn.jsdelivr.net/npm/decap-cms@3.0.9/dist/decap-cms.js"></script>
 
     <script>
-      window.addEventListener("load", function () {
-        const cms = window.DecapCMS || window.CMS;
-        if (!cms) {
+      window.addEventListener("load", () => {
+        const CMS = window.DecapCMS || window.CMS;
+        if (!CMS) {
           console.error("Decap CMS failed to load — check CDN link.");
           return;
         }
 
-        cms.init();
+        CMS.init();
 
-        // Continuously remove Decap branding after it loads
-        const removeDecapLogo = () => {
-          const logos = document.querySelectorAll(
-            ".nc-loginLogo, .nc-loginLogo-image, .nc-loginPage-logo, [src*='decap'], [alt*='Decap']"
-          );
-          logos.forEach(el => el.remove());
+        // 🔥 Keep watching and removing Decap logos continuously
+        const removeDecapLogos = () => {
+          document.querySelectorAll(`
+            .nc-loginLogo, .nc-loginLogo-image, .nc-loginPage-logo,
+            img[alt*="Decap"], img[src*="decap"], [data-testid*="logo"], [class*="Logo"]
+          `).forEach(el => el.remove());
         };
 
-        const observer = new MutationObserver(removeDecapLogo);
+        // Run once and then observe for new elements
+        removeDecapLogos();
+        const observer = new MutationObserver(removeDecapLogos);
         observer.observe(document.body, { childList: true, subtree: true });
-        removeDecapLogo(); // run immediately
       });
     </script>
   </body>
