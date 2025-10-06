@@ -1,25 +1,29 @@
 backend:
   name: git-gateway
-  branch: main
-  identity_url: "https://freelancerphotoediting.netlify.app/.netlify/identity"
-  gateway_url: "https://freelancerphotoediting.netlify.app/.netlify/git"
+  branch: main  # or "master" if your repo uses that branch name
 
-media_folder: "assets/uploads"
-public_folder: "/assets/uploads"
+media_folder: "assets/uploads"   # Where uploaded images are stored in the repo
+public_folder: "/assets/uploads" # How they're accessed on the live site
+
+site_url: "https://freelancerphotoediting.netlify.app"
 
 collections:
-  - name: "site"
-    label: "Site Content"
-    files:
-      - file: "data/site.json"
-        label: "Homepage Content"
-        name: "homepage"
-        fields:
-          - { label: "Hero Heading", name: "hero_heading", widget: "string" }
-          - { label: "Hero Subheading", name: "hero_subheading", widget: "string" }
-          - label: "Portfolio"
-            name: "portfolio"
-            widget: "list"
-            fields:
-              - { label: "Title", name: "title", widget: "string" }
-              - { label: "Image", name: "image", widget: "image" }
+  - name: "portfolio"
+    label: "Portfolio"
+    folder: "content/portfolio"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Description", name: "description", widget: "text" }
+      - { label: "Image", name: "image", widget: "image" }
+
+  - name: "blog"
+    label: "Blog"
+    folder: "content/blog"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Date", name: "date", widget: "datetime" }
+      - { label: "Body", name: "body", widget: "markdown" }
