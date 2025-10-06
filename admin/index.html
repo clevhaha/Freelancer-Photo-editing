@@ -3,63 +3,106 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>CMS Login | Freelancer Photo Editing</title>
+    <title>Freelancer Photo Editing CMS</title>
+
     <style>
       body {
-        margin: 0;
-        padding: 0;
-        background-color: #0b1120; /* same as site background */
+        background: #f6f7fb;
+        font-family: "Inter", sans-serif;
         display: flex;
         justify-content: center;
         align-items: center;
         height: 100vh;
-        font-family: "Inter", sans-serif;
+        margin: 0;
       }
-      .login-wrapper {
-        text-align: center;
+
+      /* Container for logo + login form */
+      .login-layout {
+        display: flex;
+        align-items: center;
+        gap: 40px; /* space between logo and form */
       }
-      .login-wrapper img {
-        width: 100px;
-        border-radius: 12px;
-        margin-bottom: 20px; /* spacing above email field */
+
+      /* ✅ Your logo styling */
+      .cms-logo {
+        width: 120px;
+        height: auto;
+        border-radius: 10px;
       }
-      .login-wrapper input {
-        display: block;
-        width: 300px;
-        margin: 10px auto;
-        padding: 10px;
-        border: none;
-        border-radius: 8px;
+
+      /* Hide Decap CMS logo completely */
+      .nc-loginLogo,
+      .nc-loginLogo-image,
+      .nc-loginPage-logo,
+      img[alt*="Decap"],
+      img[src*="decap"],
+      [data-testid*="logo"],
+      [class*="Logo"] {
+        display: none !important;
+        opacity: 0 !important;
+        visibility: hidden !important;
+        height: 0 !important;
+        width: 0 !important;
       }
-      .login-wrapper button {
-        background-color: #f97316; /* orange like your buttons */
-        color: white;
-        border: none;
-        border-radius: 8px;
-        padding: 10px 20px;
-        cursor: pointer;
-        font-weight: bold;
+
+      /* Style login form */
+      input {
+        border-radius: 6px !important;
+        padding: 8px !important;
       }
-      .login-wrapper button:hover {
-        background-color: #ea580c;
+
+      button,
+      .nc-loginButton {
+        background-color: #ff6600 !important;
+        border: none !important;
+        color: white !important;
+        font-weight: bold !important;
+        border-radius: 6px !important;
+        padding: 8px 20px !important;
+        transition: 0.3s !important;
+      }
+
+      button:hover,
+      .nc-loginButton:hover {
+        background-color: #ff8533 !important;
+        cursor: pointer !important;
       }
     </style>
   </head>
+
   <body>
-    <div class="login-wrapper">
-      <img src="/assets/uploads/your-logo.png" alt="Logo" />
-      <script src="https://cdn.jsdelivr.net/npm/decap-cms@3.0.9/dist/decap-cms.js"></script>
-      <script>
-        window.addEventListener("load", function () {
-          if (typeof window.DecapCMS !== "undefined") {
-            window.DecapCMS.init();
-          } else if (typeof window.CMS !== "undefined") {
-            window.CMS.init();
-          } else {
-            console.error("Netlify CMS script failed to load.");
-          }
-        });
-      </script>
+    <div class="login-layout">
+      <!-- ✅ Your logo -->
+      <img src="/assets/uploads/logo.png" alt="Freelancer Photo Editing" class="cms-logo" />
+
+      <!-- ✅ Load Decap CMS -->
+      <div id="cms-root"></div>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/decap-cms@3.0.9/dist/decap-cms.js"></script>
+
+    <script>
+      window.addEventListener("load", () => {
+        const CMS = window.DecapCMS || window.CMS;
+        if (!CMS) {
+          console.error("Decap CMS failed to load — check CDN link.");
+          return;
+        }
+
+        CMS.init();
+
+        // Hide Decap logo dynamically
+        const removeLogos = () => {
+          document.querySelectorAll(`
+            .nc-loginLogo, .nc-loginLogo-image, .nc-loginPage-logo,
+            img[alt*="Decap"], img[src*="decap"], [data-testid*="logo"], [class*="Logo"]
+          `).forEach(el => el.remove());
+        };
+
+        removeLogos();
+        const observer = new MutationObserver(removeLogos);
+        observer.observe(document.body, { childList: true, subtree: true });
+      });
+    </script>
   </body>
 </html>
