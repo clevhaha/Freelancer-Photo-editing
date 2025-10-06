@@ -6,18 +6,17 @@
     <title>Content Manager | Freelancer Photo Editing</title>
   </head>
   <body>
-    <!-- Load the Decap CMS (Netlify CMS) script -->
-    <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+    <!-- ✅ Load Decap CMS (the maintained Netlify CMS fork) -->
+    <script src="https://cdn.jsdelivr.net/npm/decap-cms@3.0.9/dist/decap-cms.js"></script>
 
     <script>
-      // Wait until Decap CMS is available
       window.addEventListener("load", function () {
         if (typeof window.DecapCMS !== "undefined") {
           window.DecapCMS.init();
         } else if (typeof window.CMS !== "undefined") {
           window.CMS.init();
         } else {
-          console.error("CMS script not found — please check CDN link.");
+          console.error("Netlify CMS script failed to load — check CDN link.");
         }
       });
     </script>
