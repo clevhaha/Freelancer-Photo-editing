@@ -17,8 +17,8 @@
         margin: 0;
       }
 
-      /* Container for logo + login box */
-      .login-container {
+      /* Center the login area */
+      .login-wrapper {
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -26,14 +26,14 @@
         gap: 15px;
       }
 
-      /* ✅ Your logo (just above the email field) */
+      /* ✅ Your logo above the email input */
       .cms-logo {
         width: 100px;
-        border-radius: 12px;
+        border-radius: 10px;
         margin-bottom: 10px;
       }
 
-      /* ✅ Remove Decap/Netlify logos completely */
+      /* ✅ Remove all Decap logos completely */
       .nc-loginLogo,
       .nc-loginLogo-image,
       .nc-loginPage-logo,
@@ -48,20 +48,7 @@
         width: 0 !important;
       }
 
-      /* ✅ Center the login form */
-      .nc-loginPage,
-      .nc-loginContent {
-        display: flex !important;
-        flex-direction: column !important;
-        align-items: center !important;
-        justify-content: center !important;
-      }
-
-      input {
-        border-radius: 8px !important;
-      }
-
-      /* Optional styling for Login button */
+      /* Style login button */
       button,
       .nc-loginButton {
         background-color: #ff6600 !important;
@@ -78,12 +65,16 @@
         background-color: #ff8533 !important;
         cursor: pointer !important;
       }
+
+      input {
+        border-radius: 8px !important;
+      }
     </style>
   </head>
 
   <body>
-    <!-- ✅ Logo placed near Email input -->
-    <div class="login-container">
+    <!-- ✅ Logo placed above Email input -->
+    <div class="login-wrapper">
       <img src="/assets/uploads/logo.png" alt="Freelancer Photo Editing" class="cms-logo" />
     </div>
 
@@ -111,6 +102,19 @@
         removeLogos();
         const observer = new MutationObserver(removeLogos);
         observer.observe(document.body, { childList: true, subtree: true });
+
+        // ✅ Move your logo above the Email input
+        const insertLogo = () => {
+          const emailInput = document.querySelector('input[type="email"]');
+          const loginWrapper = document.querySelector(".login-wrapper");
+          if (emailInput && loginWrapper && !emailInput.parentElement.querySelector(".cms-logo")) {
+            emailInput.parentElement.insertBefore(loginWrapper, emailInput.parentElement.firstChild);
+          }
+        };
+
+        const observer2 = new MutationObserver(insertLogo);
+        observer2.observe(document.body, { childList: true, subtree: true });
+        insertLogo();
       });
     </script>
   </body>
