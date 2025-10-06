@@ -1,0 +1,23 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "assets/uploads"
+public_folder: "/assets/uploads"
+
+collections:
+  - name: "site"
+    label: "Site Content"
+    files:
+      - file: "Data.json"
+        label: "Homepage Content"
+        name: "homepage"
+        fields:
+          - { label: "Hero Heading", name: "hero_heading", widget: "string" }
+          - { label: "Hero Subheading", name: "hero_subheading", widget: "string" }
+          - label: "Portfolio"
+            name: "portfolio"
+            widget: "list"
+            fields:
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Image", name: "image", widget: "image" }
