@@ -8,25 +8,32 @@
     <style>
       body {
         background: #0b1120;
-        color: #fff;
         font-family: "Inter", sans-serif;
+        color: #fff;
         display: flex;
-        flex-direction: column;
-        align-items: center;
         justify-content: center;
+        align-items: center;
         min-height: 100vh;
         margin: 0;
       }
 
-      /* ✅ Custom logo placed just above login inputs */
+      /* Container for logo + login box */
+      .login-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 15px;
+      }
+
+      /* ✅ Your logo (just above the email field) */
       .cms-logo {
         width: 100px;
         border-radius: 12px;
-        margin-bottom: 20px;
-        display: block;
+        margin-bottom: 10px;
       }
 
-      /* ✅ Hide Decap CMS logos */
+      /* ✅ Remove Decap/Netlify logos completely */
       .nc-loginLogo,
       .nc-loginLogo-image,
       .nc-loginPage-logo,
@@ -41,26 +48,44 @@
         width: 0 !important;
       }
 
-      /* Center login form */
+      /* ✅ Center the login form */
       .nc-loginPage,
       .nc-loginContent {
         display: flex !important;
         flex-direction: column !important;
         align-items: center !important;
         justify-content: center !important;
-        margin-top: -50px !important;
       }
 
-      /* Optional: round input corners for style */
       input {
         border-radius: 8px !important;
+      }
+
+      /* Optional styling for Login button */
+      button,
+      .nc-loginButton {
+        background-color: #ff6600 !important;
+        border: none !important;
+        color: white !important;
+        font-weight: bold !important;
+        border-radius: 6px !important;
+        padding: 8px 20px !important;
+        transition: 0.3s !important;
+      }
+
+      button:hover,
+      .nc-loginButton:hover {
+        background-color: #ff8533 !important;
+        cursor: pointer !important;
       }
     </style>
   </head>
 
   <body>
-    <!-- ✅ Your logo — will appear above the login form -->
-    <img src="/assets/uploads/logo.png" alt="Freelancer Photo Editing Logo" class="cms-logo" />
+    <!-- ✅ Logo placed near Email input -->
+    <div class="login-container">
+      <img src="/assets/uploads/logo.png" alt="Freelancer Photo Editing" class="cms-logo" />
+    </div>
 
     <!-- ✅ Load Decap CMS -->
     <script src="https://cdn.jsdelivr.net/npm/decap-cms@3.0.9/dist/decap-cms.js"></script>
@@ -75,16 +100,16 @@
 
         CMS.init();
 
-        // 🔥 Keep removing Decap logos repeatedly
-        const removeDecapLogos = () => {
+        // 🔥 Remove Decap logos dynamically
+        const removeLogos = () => {
           document.querySelectorAll(`
             .nc-loginLogo, .nc-loginLogo-image, .nc-loginPage-logo,
             img[alt*="Decap"], img[src*="decap"], [data-testid*="logo"], [class*="Logo"]
           `).forEach(el => el.remove());
         };
 
-        removeDecapLogos();
-        const observer = new MutationObserver(removeDecapLogos);
+        removeLogos();
+        const observer = new MutationObserver(removeLogos);
         observer.observe(document.body, { childList: true, subtree: true });
       });
     </script>
