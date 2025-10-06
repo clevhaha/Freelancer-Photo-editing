@@ -1,20 +1,23 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>CMS | Freelancer Photo Editing</title>
+backend:
+  name: git-gateway
+  branch: main
 
-    <!-- ✅ Load Netlify CMS app -->
-    <script src="https://unpkg.com/netlify-cms-app@^2.15.0/dist/netlify-cms.js"></script>
-    <script>
-      // ✅ Explicitly initialize the CMS (this avoids silent blank screens)
-      window.CMS_MANUAL_INIT = true;
-      NetlifyCmsApp.init();
-    </script>
-  </head>
+media_folder: "assets/uploads"
+public_folder: "/assets/uploads"
 
-  <body>
-    <!-- CMS mounts here -->
-  </body>
-</html>
+collections:
+  - name: "site"
+    label: "Site Content"
+    files:
+      - file: "data/site.json"
+        label: "Homepage Content"
+        name: "homepage"
+        fields:
+          - { label: "Hero Heading", name: "hero_heading", widget: "string" }
+          - { label: "Hero Subheading", name: "hero_subheading", widget: "string" }
+          - label: "Portfolio"
+            name: "portfolio"
+            widget: "list"
+            fields:
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Image", name: "image", widget: "image" }
