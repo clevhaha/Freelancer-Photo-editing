@@ -108,18 +108,39 @@
     </div>
   </div>
 
-  <!-- ✅ Netlify Identity Widget -->
+  <!-- ✅ Netlify Identity widget + invite token fix -->
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
   <script>
-    if (window.netlifyIdentity) {
+    document.addEventListener("DOMContentLoaded", () => {
+      if (!window.netlifyIdentity) {
+        console.error("Netlify Identity failed to load");
+        return;
+      }
+
+      // 🔧 Fix #invite_token issue in Netlify invite links
+      if (window.location.hash.includes("invite_token=")) {
+        const fixedUrl = window.location.href.replace("#invite_token", "?invite_token");
+        window.location.href = fixedUrl;
+      }
+
       window.netlifyIdentity.on("init", (user) => {
-        if (!user) {
-          window.netlifyIdentity.on("login", () => {
-            document.location.href = "/admin/";
-          });
-        }
+        if (!user) console.log("No user logged in");
+        else document.location.href = "/admin/";
       });
-    }
+
+      window.netlifyIdentity.on("login", () => {
+        document.location.href = "/admin/";
+      });
+
+      // 📨 Automatically handle invite token
+      const token = new URLSearchParams(window.location.search).get("invite_token");
+      if (token) {
+        window.netlifyIdentity
+          .acceptInvite(token, true)
+          .then(() => console.log("Invite accepted — waiting for popup..."))
+          .catch((err) => console.error("Invite error:", err));
+      }
+    });
   </script>
 </body>
 </html>
